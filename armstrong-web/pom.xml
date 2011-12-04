@@ -20,5 +20,9 @@
             <groupId>uk.co.codingcraft</groupId>
             <artifactId>armstrong-core</artifactId>
         </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
     </dependencies>
 </project>
