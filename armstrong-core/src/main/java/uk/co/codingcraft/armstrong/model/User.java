@@ -35,8 +35,12 @@ public class User implements UserDetails {
 	@JoinTable(name = "subscriptions")
 	private Set<Feed> subscriptions;
 
-	@OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "userId")
 	private Set<Role> roles;
+
+    @ManyToMany
+	@JoinTable(name = "read_list")
+	private Set<Entry> readEntries;
 
 	public String getEmailAddress() {
 		return emailAddress;

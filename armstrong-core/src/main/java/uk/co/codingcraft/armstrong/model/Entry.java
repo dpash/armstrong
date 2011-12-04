@@ -4,6 +4,7 @@ import org.apache.commons.lang.builder.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "entries")
@@ -33,7 +34,6 @@ public class Entry {
 	@Column(name = "created")
 	private Date created;
 
-
 	@Column(name = "guid", length = 1000)
 	private String guid;
 
@@ -48,6 +48,10 @@ public class Entry {
 
 	@Column(name = "title", length = 1000)
 	private String title;
+
+    @ManyToMany
+	@JoinTable(name = "read_list")
+	private Set<User> usersRead;
 
 	public String getAuthorEmail() {
 		return authorEmail;

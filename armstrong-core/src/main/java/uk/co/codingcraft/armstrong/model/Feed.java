@@ -2,6 +2,7 @@ package uk.co.codingcraft.armstrong.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "feeds")
@@ -45,6 +46,10 @@ public class Feed {
 
     @Column(name = "status_message", length=200)
     private String statusMessage;
+
+    @ManyToMany
+	@JoinTable(name = "subscriptions")
+	private Set<User> subscribedUsers;
 
     public Long getId() {
         return id;

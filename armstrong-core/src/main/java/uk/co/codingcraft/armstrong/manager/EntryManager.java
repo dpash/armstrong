@@ -16,8 +16,12 @@ public class EntryManager {
 	@Autowired
 	private EntryRepository repository;
 
+    public Set<Entry> findEntriesForUser(User user, Pageable page) {
+        return repository.findEntriesForUser(user, page);
+    }
+
 	public Set<Entry> findUnreadEntries(User user, Pageable page) {
-		return Collections.emptySet();
+		return repository.findUnreadEntries(user, page);
 	}
 
 }
