@@ -16,10 +16,10 @@ public class Feed {
 	@Column(name = "url", length = 100)
 	private String url;
 
-	@Column(name = "feedName", length=255)
+	@Column(name = "feed_name", length=255)
 	private String feedName;
 
-    @Column(name = "feedURL", length=255)
+    @Column(name = "feed_url", length=255)
     private String feedUrl;
 
     @Column(name="last_modified")
@@ -28,8 +28,8 @@ public class Feed {
     @Column(name="last_checked")
     private Date lastChecked;
 
-    @Column(name="next_checked")
-    private Date nextChecked;
+    @Column(name="next_check")
+    private Date nextCheck;
 
     @Column(name="check_interval")
     private Integer checkInterval;
@@ -43,7 +43,7 @@ public class Feed {
     @Column(name="status")
     private Integer status;
 
-    @Column(name = "statusMessage", length=200)
+    @Column(name = "status_message", length=200)
     private String statusMessage;
 
     public Long getId() {
@@ -94,12 +94,12 @@ public class Feed {
         this.lastChecked = lastChecked;
     }
 
-    public Date getNextChecked() {
-        return nextChecked;
+    public Date getNextCheck() {
+        return nextCheck;
     }
 
-    public void setNextChecked(Date nextChecked) {
-        this.nextChecked = nextChecked;
+    public void setNextCheck(Date nextCheck) {
+        this.nextCheck = nextCheck;
     }
 
     public Integer getCheckInterval() {
@@ -158,7 +158,7 @@ public class Feed {
         if (lastModified != null ? !lastModified.equals(feed.lastModified) : feed.lastModified != null) return false;
         if (minimumCheckInterval != null ? !minimumCheckInterval.equals(feed.minimumCheckInterval) : feed.minimumCheckInterval != null)
             return false;
-        if (nextChecked != null ? !nextChecked.equals(feed.nextChecked) : feed.nextChecked != null) return false;
+        if (nextCheck != null ? !nextCheck.equals(feed.nextCheck) : feed.nextCheck != null) return false;
         if (status != null ? !status.equals(feed.status) : feed.status != null) return false;
         if (statusMessage != null ? !statusMessage.equals(feed.statusMessage) : feed.statusMessage != null)
             return false;
@@ -176,7 +176,7 @@ public class Feed {
         result = 31 * result + (feedUrl != null ? feedUrl.hashCode() : 0);
         result = 31 * result + (lastModified != null ? lastModified.hashCode() : 0);
         result = 31 * result + (lastChecked != null ? lastChecked.hashCode() : 0);
-        result = 31 * result + (nextChecked != null ? nextChecked.hashCode() : 0);
+        result = 31 * result + (nextCheck != null ? nextCheck.hashCode() : 0);
         result = 31 * result + (checkInterval != null ? checkInterval.hashCode() : 0);
         result = 31 * result + (minimumCheckInterval != null ? minimumCheckInterval.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
