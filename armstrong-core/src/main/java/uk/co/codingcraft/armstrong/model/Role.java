@@ -1,11 +1,12 @@
 package uk.co.codingcraft.armstrong.model;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@Table(name = "feeds")
-public class UserRole {
+@Table(name = "user_roles")
+public class Role implements GrantedAuthority {
 
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,11 +48,11 @@ public class UserRole {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserRole userRole = (UserRole) o;
+        Role role = (Role) o;
 
-        if (id != null ? !id.equals(userRole.id) : userRole.id != null) return false;
-        if (role != null ? !role.equals(userRole.role) : userRole.role != null) return false;
-        if (userId != null ? !userId.equals(userRole.userId) : userRole.userId != null) return false;
+        if (id != null ? !id.equals(role.id) : role.id != null) return false;
+        if (this.role != null ? !this.role.equals(role.role) : role.role != null) return false;
+        if (userId != null ? !userId.equals(role.userId) : role.userId != null) return false;
 
         return true;
     }
@@ -63,4 +64,9 @@ public class UserRole {
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
     }
+
+	@Override
+	public String getAuthority() {
+		return role;
+	}
 }

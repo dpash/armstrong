@@ -2,13 +2,17 @@ package uk.co.codingcraft.armstrong.model;
 
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +35,8 @@ public class User {
 	@JoinTable(name = "subscriptions")
 	private Set<Feed> subscriptions;
 
-
+	@OneToMany(mappedBy = "userId")
+	private Set<Role> roles;
 
 	public String getEmailAddress() {
 		return emailAddress;
@@ -57,6 +62,11 @@ public class User {
 		this.name = name;
 	}
 
+	@Override
+	public Collection<GrantedAuthority> getAuthorities() {
+		return new ArrayList<GrantedAuthority>(roles);
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -69,8 +79,36 @@ public class User {
 		return username;
 	}
 
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public Set<Feed> getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setSubscriptions(Set<Feed> subscriptions) {
+		this.subscriptions = subscriptions;
 	}
 
 	@Override
