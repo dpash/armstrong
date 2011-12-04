@@ -13,6 +13,12 @@
     <groupId>uk.co.codingcraft</groupId>
     <artifactId>armstrong-web</artifactId>
     <version>1.0</version>
+	<packaging>war</packaging>
 
-    
+    <dependencies>
+        <dependency>
+            <groupId>uk.co.codingcraft</groupId>
+            <artifactId>armstrong-core</artifactId>
+        </dependency>
+    </dependencies>
 </project>
