@@ -10,6 +10,6 @@ import java.util.Set;
 
 public interface FeedRepository extends CrudRepository<Feed,Long> {
 
-    @Query("select f from Feed f where f.subscribedUsers.user = :user")
+    @Query("select f from Feed f")
     public Set<Feed> findFeedsByUser(@Param("user") User user);
 }

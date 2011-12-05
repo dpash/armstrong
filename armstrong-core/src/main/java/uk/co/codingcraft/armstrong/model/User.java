@@ -32,7 +32,10 @@ public class User implements UserDetails {
 	private String password;
 
 	@ManyToMany
-	@JoinTable(name = "subscriptions")
+	@JoinTable(name = "subscriptions",
+			joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+			inverseJoinColumns = {@JoinColumn(name = "feed_id", referencedColumnName = "feed_id")}
+	)
 	private Set<Feed> subscriptions;
 
     @OneToMany(mappedBy = "userId")

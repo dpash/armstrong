@@ -9,7 +9,7 @@
 
 	<context:annotation-config />
 
-	<context:component-scan base-package="uk.co.codingcraft" />
+	<context:component-scan base-package="uk.co.codingcraft.armstrong" />
 
 	<jpa:repositories base-package="uk.co.codingcraft.armstrong.dao" />
 
@@ -47,6 +47,7 @@
 		<property name="closeConnectionWatch" value="${database.debug:false}" />
 		<property name="maxConnectionsPerPartition" value="30"/>
 		<property name="minConnectionsPerPartition" value="10"/>
+		<property name="logStatementsEnabled" value="${database.debug:false}" />
 		<property name="partitionCount" value="3"/>
 		<property name="acquireIncrement" value="5"/>
 		<property name="statementsCacheSize" value="100"/>

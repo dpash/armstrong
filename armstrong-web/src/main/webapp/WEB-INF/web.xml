@@ -48,4 +48,14 @@
 		</listener-class>
 	</listener>
 
+	<servlet>
+		<display-name>Log4j configuration Servlet</display-name>
+		<servlet-name>log4j</servlet-name>
+		<servlet-class>it.openutils.log4j.Log4jConfigurationServlet</servlet-class>
+	</servlet>
+		<servlet-mapping>
+		<servlet-name>log4j</servlet-name>
+		<url-pattern>/logging/*</url-pattern>
+	</servlet-mapping>
+
 </web-app>

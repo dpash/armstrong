@@ -14,9 +14,10 @@ import uk.co.codingcraft.armstrong.model.Feed;
 import uk.co.codingcraft.armstrong.model.User;
 
 import java.util.Collection;
+import java.util.Date;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/index.do")
 @Transactional
 public class FeedController {
 
@@ -35,6 +36,7 @@ public class FeedController {
 
 		mav.addObject("feeds", feeds);
 		mav.addObject("entries", entries);
+		mav.addObject("modified", new Date());
 
 		return mav;
 	}

@@ -9,7 +9,7 @@
 
 	<http use-expressions="true">
 		<intercept-url pattern="/" access="permitAll"/>
-		<intercept-url pattern="/index.do" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_USER')" />
+		<intercept-url pattern="/index.do" access="hasAnyRole('ROLE_USER')" />
 		<http-basic  />
 		<anonymous />
 		<logout />

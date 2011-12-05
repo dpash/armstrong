@@ -48,7 +48,11 @@ public class Feed {
     private String statusMessage;
 
     @ManyToMany
-	@JoinTable(name = "subscriptions")
+	@JoinTable(
+			name = "subscriptions",
+			joinColumns = {@JoinColumn(name = "feed_id", referencedColumnName = "feed_id")},
+			inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")}
+	)
 	private Set<User> subscribedUsers;
 
     public Long getId() {
@@ -123,7 +127,7 @@ public class Feed {
         this.minimumCheckInterval = minimumCheckInterval;
     }
 
-    public String title() {
+    public String getTitle() {
         return title;
     }
 

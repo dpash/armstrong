@@ -7,8 +7,8 @@ import uk.co.codingcraft.armstrong.dao.EntryRepository;
 import uk.co.codingcraft.armstrong.model.Entry;
 import uk.co.codingcraft.armstrong.model.User;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
 
 @Service
 public class EntryManager {
@@ -16,12 +16,12 @@ public class EntryManager {
 	@Autowired
 	private EntryRepository repository;
 
-    public Set<Entry> findEntriesForUser(User user, Pageable page) {
+    public Collection<Entry> findEntriesForUser(User user, Pageable page) {
         return repository.findEntriesForUser(user, page);
     }
 
-	public Set<Entry> findUnreadEntries(User user, Pageable page) {
-		return repository.findUnreadEntries(user, page);
+	public Collection<Entry> findUnreadEntries(User user, Pageable page) {
+		return Collections.emptySet();
 	}
 
 }
