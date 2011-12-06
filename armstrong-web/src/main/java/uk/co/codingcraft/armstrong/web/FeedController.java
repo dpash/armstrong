@@ -13,8 +13,7 @@ import uk.co.codingcraft.armstrong.model.Entry;
 import uk.co.codingcraft.armstrong.model.Feed;
 import uk.co.codingcraft.armstrong.model.User;
 
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 
 @Controller
 @RequestMapping("/index.do")
@@ -31,8 +30,15 @@ public class FeedController {
 	public ModelAndView index() {
 		User user = userManager.getCurrentUser();
 		ModelAndView mav = new ModelAndView("feeds");
-		Collection<Feed> feeds = user.getSubscriptions();
-		Collection<Entry> entries = entryManager.findEntriesForUser(user, new PageRequest(0, 50) );
+		List<Feed> feeds = new ArrayList<Feed>(user.getSubscriptions());
+				
+		Collections.sort(feeds, new Comparator<Feed>() {
+			@Override
+			public int compare(Feed left, Feed right) {
+				return left.getFeedName().compareTo(right.getFeedName());
+			}
+		});
+		Collection<Entry> entries = entryManager.findEntriesForUser(user, new PageRequest(0, 50));
 
 		mav.addObject("feeds", feeds);
 		mav.addObject("entries", entries);
