@@ -2,6 +2,7 @@ package uk.co.codingcraft.armstrong.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,8 @@ public class FeedController {
 				return left.getFeedName().compareTo(right.getFeedName());
 			}
 		});
-		Collection<Entry> entries = entryManager.findEntriesForUser(user, new PageRequest(0, 50));
+		Collection<Entry> entries = entryManager.findEntriesForUser(user,
+				new PageRequest(0, 50, new Sort(Sort.Direction.DESC, "modified")));
 
 		mav.addObject("feeds", feeds);
 		mav.addObject("entries", entries);
