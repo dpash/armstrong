@@ -1,6 +1,9 @@
 package uk.co.codingcraft.armstrong.model;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
@@ -47,6 +50,26 @@ public class Feed {
     @Column(name = "status_message", length=200)
     private String statusMessage;
 
+	public Collection<Entry> getEntries() {
+		return entries;
+	}
+
+	public void setEntries(Collection<Entry> entries) {
+		this.entries = entries;
+	}
+
+	public Set<User> getSubscribedUsers() {
+		return subscribedUsers;
+	}
+
+	public void setSubscribedUsers(Set<User> subscribedUsers) {
+		this.subscribedUsers = subscribedUsers;
+	}
+
+	@OneToMany
+	@JoinColumn(name = "feed")
+	private Collection<Entry> entries;
+	
     @ManyToMany
 	@JoinTable(
 			name = "subscriptions",
@@ -193,4 +216,13 @@ public class Feed {
         result = 31 * result + (statusMessage != null ? statusMessage.hashCode() : 0);
         return result;
     }
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).
+				append("id", id).
+				append("feedName", feedName).
+				append("feedUrl", feedUrl).
+				toString();
+	}
 }

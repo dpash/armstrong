@@ -42,7 +42,10 @@ public class User implements UserDetails {
 	private Set<Role> roles;
 
     @ManyToMany
-	@JoinTable(name = "read_list")
+	@JoinTable(name = "read_list",
+			joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+			inverseJoinColumns = {@JoinColumn(name = "entry_id", referencedColumnName = "entry_id")}
+	)
 	private Set<Entry> readEntries;
 
 	public String getEmailAddress() {

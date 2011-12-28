@@ -8,7 +8,6 @@ import uk.co.codingcraft.armstrong.model.Entry;
 import uk.co.codingcraft.armstrong.model.User;
 
 import java.util.Collection;
-import java.util.Collections;
 
 @Service
 public class EntryManager {
@@ -21,7 +20,7 @@ public class EntryManager {
     }
 
 	public Collection<Entry> findUnreadEntries(User user, Pageable page) {
-		return Collections.emptySet();
+		return repository.findUnreadEntries(user,page);
 	}
 
 }

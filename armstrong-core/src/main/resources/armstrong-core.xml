@@ -3,7 +3,9 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:context="http://www.springframework.org/schema/context"
 	   xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	   xmlns:task="http://www.springframework.org/schema/task" xmlns:amq="http://activemq.apache.org/schema/core"
+	   xmlns:jms="http://www.springframework.org/schema/jms"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.4.2.xsd http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd">
 
 	<context:property-placeholder location="classpath:/armstrong.properties"/>
 
@@ -14,6 +16,48 @@
 	<jpa:repositories base-package="uk.co.codingcraft.armstrong.dao" />
 
    <tx:annotation-driven />
+
+	<task:annotation-driven executor="myExecutor" scheduler="myScheduler"/>
+
+	<task:executor id="myExecutor" pool-size="5"/>
+
+	<task:scheduler id="myScheduler" pool-size="10"/>
+
+	<!--  lets create an embedded ActiveMQ Broker -->
+	<amq:broker useJmx="false" persistent="false">
+		<amq:transportConnectors>
+			<amq:transportConnector uri="tcp://localhost:0" />
+		</amq:transportConnectors>
+	</amq:broker>
+
+	 <amq:queue id="destination"  physicalName="fetchfeed"/>
+
+	<amq:connectionFactory id="activemqConnectionFactory" brokerURL="vm://localhost" clientIDPrefix="spiderclient" >
+		<amq:properties>
+			<amq:redeliveryPolicy
+					maximumRedeliveries="20"
+					collisionAvoidancePercent="15"
+					initialRedeliveryDelay="5000"/>
+		</amq:properties>
+	</amq:connectionFactory>
+
+	<bean id="cachedConnectionFactory"
+    class="org.springframework.jms.connection.CachingConnectionFactory">
+	<property name="targetConnectionFactory" ref="activemqConnectionFactory"/>
+    </bean>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate" >
+        <property name="connectionFactory" ref="cachedConnectionFactory" />
+        <property name="defaultDestinationName" value="fetchfeed" />
+    </bean>
+
+	<jms:listener-container
+			container-type="default"
+			connection-factory="cachedConnectionFactory"
+			concurrency="10">
+		<jms:listener ref="spiderListener" destination="destination"/>
+	</jms:listener-container>
+
 
    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 

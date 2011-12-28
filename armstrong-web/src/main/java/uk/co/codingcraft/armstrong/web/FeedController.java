@@ -39,7 +39,7 @@ public class FeedController {
 				return left.getFeedName().compareTo(right.getFeedName());
 			}
 		});
-		Collection<Entry> entries = entryManager.findEntriesForUser(user,
+		Collection<Entry> entries = entryManager.findUnreadEntries(user,
 				new PageRequest(0, 50, new Sort(Sort.Direction.DESC, "modified")));
 
 		mav.addObject("feeds", feeds);

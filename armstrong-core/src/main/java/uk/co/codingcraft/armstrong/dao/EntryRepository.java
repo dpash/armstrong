@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface EntryRepository  extends CrudRepository<Entry,Long> {
 
-    @Query("select e from Entry e inner join e.feed f inner join f.subscribedUsers u where u = :user")
+    @Query("select e from Entry e where e.feed.subscribedUsers = :user")
     public List<Entry> findEntriesForUser(@Param("user") User user, Pageable page);
 
-    @Query("select e from Entry e inner join e.feed f inner join f.subscribedUsers u where u = :user")
-    public List<Entry> findUnreadEntries(User user, Pageable page);
+    @Query("select e from Entry e inner join e.feed f inner join f.subscribedUsers u where u = :user and e not member of u.readEntries" )
+    public List<Entry> findUnreadEntries(@Param("user") User user, Pageable page);
 }
